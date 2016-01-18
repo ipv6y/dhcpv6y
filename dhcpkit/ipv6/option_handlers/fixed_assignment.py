@@ -141,6 +141,10 @@ class FixedAssignmentOptionHandler(OptionHandler, metaclass=ABCMeta):
                 # Answer to this option
                 logger.info("Assigning {} to {!r}".format(assignment.address,
                                                           bundle.request.get_option_of_type(ClientIdOption).duid))
+
+                # For each address in the address field of the Assignment object
+                # create an IAAddressOption and add it to the options field of the
+                # response.
                 options = [IAAddressOption(address=address,
                                            preferred_lifetime=self.address_preferred_lifetime,
                                            valid_lifetime=self.address_valid_lifetime) for address in

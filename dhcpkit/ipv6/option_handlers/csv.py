@@ -117,7 +117,9 @@ class CSVBasedFixedAssignmentOptionHandler(FixedAssignmentOptionHandler):
             for row in reader:
                 line += 1
                 try:
+                    # Split addresses with the new delemiter ";"
                     address_str = row['address'].strip().split(';')
+                    # Create an IPv6Address object for each address
                     addresses = [IPv6Address(address) for address in address_str]
                     logger.debug("Loaded addresses {!r}".format(addresses))
 
@@ -169,6 +171,8 @@ class CSVBasedFixedAssignmentOptionHandler(FixedAssignmentOptionHandler):
 
                     # Store the normalised id
                     logger.debug("Loaded assignment for {}".format(row_id))
+
+                    # Add the addresses to the Assignment object 
                     yield row_id, Assignment(address=addresses, prefix=prefix)
 
                 except KeyError:
